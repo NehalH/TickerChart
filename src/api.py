@@ -1,5 +1,6 @@
 from flask import Flask, request
 from flask_restful import Resource, Api
+from chart_source import get_stock_data
 
 app = Flask(__name__)
 api = Api(app)
@@ -15,10 +16,9 @@ class Chart(Resource):
 
     def get(self):
         ticker, period, interval = Chart.parse_request()
+        data = get_stock_data(ticker, period, interval)
         return {
-            'data': ticker,
-            'period': period,
-            'interval': interval
+            'data': data,
         }, 200
 
 api.add_resource(Chart, "/chart")
