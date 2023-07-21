@@ -17,9 +17,14 @@ class Chart(Resource):
     def get(self):
         ticker, period, interval = Chart.parse_request()
         data = get_stock_data(ticker, period, interval)
-        return {
-            'data': data,
-        }, 200
+        if bool(data):
+            return {
+                'data': data,
+            }, 200
+        else:
+            return {
+                'message': f'The ticker {ticker} was not found.'
+            }, 404
 
 api.add_resource(Chart, "/chart")
 
