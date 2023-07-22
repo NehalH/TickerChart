@@ -29,4 +29,4 @@ class Chart(Resource):
 api.add_resource(Chart, "/chart")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
