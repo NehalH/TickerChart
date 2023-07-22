@@ -16,6 +16,12 @@ class Chart(Resource):
 
     def get(self):
         ticker, period, interval = Chart.parse_request()
+        if not bool(ticker):
+            return {
+                'message':'No query parameters were passed for the API call. Refer documentation.',
+                'doc':'https://github.com/NehalH/TickerChart/blob/main/README.md#how-to-use'
+            }
+        
         data = get_stock_data(ticker, period, interval)
         if bool(data):
             return {
@@ -29,4 +35,4 @@ class Chart(Resource):
 api.add_resource(Chart, "/chart")
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
